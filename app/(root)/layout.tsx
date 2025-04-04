@@ -9,7 +9,7 @@ const RootLayout = async ({children} : {children: ReactNode}) => {
   const isUserAuthenticated = await isAuthenticated();
 
   if(!isUserAuthenticated){
-    redirect("/");
+    redirect("/sign-in");
   }
 
   return (
