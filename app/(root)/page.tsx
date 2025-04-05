@@ -59,6 +59,7 @@ const LandingPage = () => {
                 width={500} 
                 height={500} 
                 className="object-contain drop-shadow-2xl"
+                priority
               />
             </div>
           </div>
@@ -165,7 +166,14 @@ const AuthenticatedHomePage = async () => {
             </Button>
           </div>
         </div>
-        <Image src="/robot.png" alt="robot" width={400} height={400} className="max-sm:hidden" />
+        <Image 
+          src="/robot.png" 
+          alt="robot" 
+          width={400} 
+          height={400} 
+          className="max-sm:hidden" 
+          priority
+        />
       </section>
       <section className='flex flex-col gap-6 mt-8'>
         <h2>Your Interviews</h2>

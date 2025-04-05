@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="883" height="586" viewBox="0 0 883 586" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- Definitions for animations -->
+  <defs>
+    <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a90e2">
+        <animate attributeName="stop-color" 
+                 values="#4a90e2; #50e3c2; #4a90e2" 
+                 dur="8s" 
+                 repeatCount="indefinite" />
+      </stop>
+      <stop offset="100%" stop-color="#50e3c2">
+        <animate attributeName="stop-color" 
+                 values="#50e3c2; #b264c7; #50e3c2" 
+                 dur="8s" 
+                 repeatCount="indefinite" />
+      </stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Robot Group -->
+  <g id="robot">
+    <!-- Robot Head -->
+    <g id="head">
+      <rect x="341" y="80" width="200" height="160" rx="15" fill="url(#bodyGradient)" stroke="#333" stroke-width="5">
+        <animate attributeName="rx" values="15;20;15" dur="5s" repeatCount="indefinite" />
+      </rect>
+      
+      <!-- Eyes -->
+      <circle cx="391" cy="140" r="20" fill="white" stroke="#333" stroke-width="2">
+        <animate attributeName="r" values="20;22;20" dur="3s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="391" cy="140" r="10" fill="#333">
+        <animate attributeName="cx" values="391;395;391" dur="2s" repeatCount="indefinite" />
+      </circle>
+      
+      <circle cx="491" cy="140" r="20" fill="white" stroke="#333" stroke-width="2">
+        <animate attributeName="r" values="20;22;20" dur="3s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="491" cy="140" r="10" fill="#333">
+        <animate attributeName="cx" values="491;487;491" dur="2s" repeatCount="indefinite" />
+      </circle>
+      
+      <!-- Mouth -->
+      <rect x="381" y="190" width="120" height="10" rx="5" fill="#333">
+        <animate attributeName="width" values="120;80;120" dur="5s" repeatCount="indefinite" />
+        <animate attributeName="x" values="381;401;381" dur="5s" repeatCount="indefinite" />
+      </rect>
+      
+      <!-- Antenna -->
+      <line x1="441" y1="80" x2="441" y2="40" stroke="#333" stroke-width="6" />
+      <circle cx="441" cy="30" r="10" fill="#ff5252">
+        <animate attributeName="r" values="10;12;10" dur="1s" repeatCount="indefinite" />
+        <animate attributeName="fill" values="#ff5252;#ffeb3b;#ff5252" dur="2s" repeatCount="indefinite" />
+      </circle>
+    </g>
+    
+    <!-- Robot Body -->
+    <g id="body">
+      <rect x="321" y="250" width="240" height="200" rx="20" fill="url(#bodyGradient)" stroke="#333" stroke-width="5" />
+      
+      <!-- Body Buttons -->
+      <circle cx="391" cy="300" r="15" fill="#ff5252" />
+      <circle cx="441" cy="300" r="15" fill="#ffeb3b" />
+      <circle cx="491" cy="300" r="15" fill="#64dd17" />
+      
+      <!-- Control Panel -->
+      <rect x="361" y="340" width="160" height="80" rx="10" fill="#333" />
+      <rect x="371" y="350" width="140" height="60" rx="5" fill="#555">
+        <animate attributeName="fill" values="#555;#444;#555" dur="4s" repeatCount="indefinite" />
+      </rect>
+    </g>
+    
+    <!-- Arms -->
+    <g id="leftArm">
+      <rect x="271" y="270" width="50" height="20" rx="5" fill="#666" stroke="#333" stroke-width="2">
+        <animateTransform attributeName="transform"
+                          type="rotate"
+                          from="0 321 280"
+                          to="15 321 280"
+                          dur="3s"
+                          repeatCount="indefinite"
+                          additive="sum"
+                          values="0 321 280; 15 321 280; 0 321 280"
+                          keyTimes="0; 0.5; 1" />
+      </rect>
+      <rect x="221" y="270" width="50" height="20" rx="5" fill="#666" stroke="#333" stroke-width="2">
+        <animateTransform attributeName="transform"
+                          type="rotate"
+                          from="0 271 280"
+                          to="25 271 280"
+                          dur="3s"
+                          repeatCount="indefinite"
+                          additive="sum"
+                          values="0 271 280; 25 271 280; 0 271 280"
+                          keyTimes="0; 0.5; 1" />
+      </rect>
+      <circle cx="221" cy="280" r="15" fill="#888" stroke="#333" stroke-width="2" />
+    </g>
+    
+    <g id="rightArm">
+      <rect x="561" y="270" width="50" height="20" rx="5" fill="#666" stroke="#333" stroke-width="2">
+        <animateTransform attributeName="transform"
+                          type="rotate"
+                          from="0 561 280"
+                          to="-15 561 280"
+                          dur="2.5s"
+                          repeatCount="indefinite"
+                          additive="sum"
+                          values="0 561 280; -15 561 280; 0 561 280"
+                          keyTimes="0; 0.5; 1" />
+      </rect>
+      <rect x="611" y="270" width="50" height="20" rx="5" fill="#666" stroke="#333" stroke-width="2">
+        <animateTransform attributeName="transform"
+                          type="rotate"
+                          from="0 611 280"
+                          to="-25 611 280"
+                          dur="2.5s"
+                          repeatCount="indefinite"
+                          additive="sum"
+                          values="0 611 280; -25 611 280; 0 611 280"
+                          keyTimes="0; 0.5; 1" />
+      </rect>
+      <circle cx="661" cy="280" r="15" fill="#888" stroke="#333" stroke-width="2" />
+    </g>
+    
+    <!-- Legs -->
+    <g id="legs">
+      <rect x="361" y="450" width="40" height="100" rx="10" fill="#666" stroke="#333" stroke-width="3">
+        <animate attributeName="height" values="100;105;100" dur="1s" repeatCount="indefinite" />
+      </rect>
+      <rect x="481" y="450" width="40" height="100" rx="10" fill="#666" stroke="#333" stroke-width="3">
+        <animate attributeName="height" values="100;95;100" dur="1s" repeatCount="indefinite" />
+      </rect>
+      
+      <!-- Feet -->
+      <rect x="341" y="550" width="80" height="20" rx="5" fill="#444" stroke="#333" stroke-width="2" />
+      <rect x="461" y="550" width="80" height="20" rx="5" fill="#444" stroke="#333" stroke-width="2" />
+    </g>
+  </g>
+  
+  <!-- Robot hover animation -->
+  <animateTransform 
+    xlink:href="#robot"
+    attributeName="transform"
+    type="translate"
+    values="0,0; 0,-10; 0,0"
+    dur="3s"
+    repeatCount="indefinite" />
+</svg> 
