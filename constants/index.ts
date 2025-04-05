@@ -215,6 +215,7 @@ export const dummyInterviews: Interview[] = [
     questions: ["What is React?"],
     finalized: false,
     createdAt: "2024-03-15T10:00:00Z",
+    coverImage: "/amazon.png",
   },
   {
     id: "2",
@@ -226,5 +227,6 @@ export const dummyInterviews: Interview[] = [
     questions: ["What is Node.js?"],
     finalized: false,
     createdAt: "2024-03-14T15:30:00Z",
+    coverImage: "/amazon.png",
   },
 ];

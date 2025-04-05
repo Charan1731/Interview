@@ -29,10 +29,10 @@ export async function signUp(params: SignUpParams){
         
         
             
-    } catch (error: any) {
+    } catch (error: Error | unknown) {
         console.log("error creating an account", error);
 
-        if(error.code === "auth/email-already-in-use"){
+        if(error instanceof Error && 'code' in error && error.code === "auth/email-already-in-use"){
             return {
                 success: false,
                 message: "Email already in use",
@@ -82,10 +82,10 @@ export async function signIn(params: SignInParams){
 
         
         
-    }catch(error: any){
+    }catch(error: Error | unknown){
         console.log("error signing in", error);
 
-        if(error.code === "auth/id-token-expired"){
+        if(error instanceof Error && 'code' in error && error.code === "auth/id-token-expired"){
             return {
                 success: false,
                 message: "Session expired",
