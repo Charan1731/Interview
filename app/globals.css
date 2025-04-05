@@ -332,3 +332,13 @@
     transform: translateY(0);
   }
 }
+
+.text-shadow-sm {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.bg-gradient-to-r.text-transparent.bg-clip-text {
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.9));
+  -webkit-background-clip: text;
+  background-clip: text;
+}

@@ -105,7 +105,7 @@ export async function getFeedbackByInterviewId(params: GetFeedbackByInterviewIdP
 
     const { interviewId, userId} = params;
 
-    const feedback = await db.collection('feedbacks').where('interviewId', '==', interviewId).where('userId', '==', userId).limit(1).get();
+    const feedback = await db.collection('feedbacks').where('interviewId', '==', interviewId).where('userId', '==', userId).orderBy('createdAt', 'desc').limit(1).get();
 
     if(feedback.empty) return null;
 

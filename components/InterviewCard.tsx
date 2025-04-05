@@ -87,7 +87,6 @@ const InterviewCard = async ({
         <div className="flex flex-row justify-between">
           <DisplayTechIcons techStack={techstack} />
 
-          <Button className="btn-primary">
             <Link
               href={
                 feedback
@@ -95,9 +94,10 @@ const InterviewCard = async ({
                   : `/interview/${id}`
               }
             >
-              {feedback ? "Check Feedback" : "View Interview"}
+                <Button className="btn-primary">
+                  {feedback ? "Check Feedback" : "View Interview"}
+                </Button>
             </Link>
-          </Button>
         </div>
       </div>
     </div>

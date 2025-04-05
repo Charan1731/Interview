@@ -14,7 +14,7 @@ export const SignOutButton = () => {
       
       if (response.success) {
         toast.success(response.message);
-        router.push('/sign-in');
+        router.push('/');
       } else {
         toast.error(response.message || 'Failed to sign out');
       }
