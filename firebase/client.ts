@@ -4,9 +4,9 @@ import {getFirestore} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDgpjvWdAN2GmxrEld-LPl2Z5MNIOkgdKg",
-  authDomain: "techronin-6a71f.firebaseapp.com",
-  projectId: "techronin-6a71f",
-  storageBucket: "techronin-6a71f.firebasestorage.app",
+  authDomain: "Mocksy-6a71f.firebaseapp.com",
+  projectId: "Mocksy-6a71f",
+  storageBucket: "Mocksy-6a71f.firebasestorage.app",
   messagingSenderId: "509573301883",
   appId: "1:509573301883:web:15df87027b702ecf54c4de",
   measurementId: "G-W78HV5V5H3"

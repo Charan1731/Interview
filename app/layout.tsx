@@ -9,7 +9,7 @@ const monaSans = Mona_Sans({
 
 
 export const metadata: Metadata = {
-  title: "TechRonin",
+  title: "Mocksy",
   description: "Interview prep for software engineers",
 };
 
