@@ -9,9 +9,7 @@ import { getInterviewsByUserId, getAllInterviews } from '@/lib/actions/general.a
 const LandingPage = () => {
   return (
     <div className="flex flex-col gap-16 py-8 overflow-hidden">
-      {/* Hero Section */}
       <section className="relative flex flex-col-reverse md:flex-row items-center gap-8 md:gap-16 py-12">
-        {/* Background gradient elements */}
         <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary-500/30 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
         <div className="absolute -bottom-32 -right-32 w-80 h-80 bg-primary-300/30 rounded-full filter blur-3xl opacity-20 animate-pulse delay-700"></div>
         
@@ -37,7 +35,7 @@ const LandingPage = () => {
                 <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-primary-300/30 hover:bg-primary-500/10 transition-all">
+            <Button asChild size="lg" variant="outline" className="btn-secondary">
               <Link href="/sign-in">Sign In</Link>
             </Button>
           </div>
@@ -67,7 +65,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="py-16 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/0 via-primary-900/10 to-neutral-900/0"></div>
         <div className="relative z-10">
@@ -104,7 +101,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Testimonial */}
       <section className="py-12 relative overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary-500/50 to-transparent"></div>
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary-500/50 to-transparent"></div>
@@ -125,7 +121,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="card-cta py-16 px-8 rounded-2xl bg-gradient-to-r from-primary-900/80 to-primary-700/40 text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-5 mix-blend-overlay"></div>
         <div className="relative z-10 max-w-3xl mx-auto">
@@ -161,9 +156,14 @@ const AuthenticatedHomePage = async () => {
         <div className='flex flex-col gap-6 max-lg'>
           <h2>Get Interview Ready with AI Powered Practice and Feedback</h2>
           <p className='text-lg'>Practice Job Interviews with AI</p>
-          <Button asChild className='btn-primary max-sm:w-full'>
-            <Link href="/interview">Start an interview</Link>
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button asChild className='btn-primary max-sm:w-full'>
+              <Link href="/interview">Start an interview</Link>
+            </Button>
+            <Button asChild className='btn-secondary max-sm:w-full'>
+              <Link href="/dashboard">View Dashboard</Link>
+            </Button>
+          </div>
         </div>
         <Image src="/robot.png" alt="robot" width={400} height={400} className="max-sm:hidden" />
       </section>

@@ -116,3 +116,22 @@ export async function getFeedbackByInterviewId(params: GetFeedbackByInterviewIdP
         ...feedbackData.data(),
     } as Feedback;
 }
+
+export async function getAllFeedbacksByUserId(userId: string): Promise<Feedback[] | null> {
+  try {
+    const feedbacks = await db.collection('feedbacks')
+      .where('userId', '==', userId)
+      .orderBy('createdAt', 'desc')
+      .get();
+    
+    return feedbacks.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      } as Feedback;
+    });
+  } catch (error) {
+    console.error('Error getting feedbacks by userId', error);
+    return null;
+  }
+}
