@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { vapi } from '@/lib/vapi.sdk';
+import { interviewer } from '@/constants';
 
 export enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -18,7 +19,7 @@ interface SavedMessage {
   content: string;
 }
 
-const Agent = ({userName, userId, type} : AgentProps) => {
+const Agent = ({userName, userId, type, interviewId, questions} : AgentProps) => {
 
   // console.log(userName, userId, type);
 
@@ -80,11 +81,33 @@ const Agent = ({userName, userId, type} : AgentProps) => {
       
   }, [])
 
+  const handleGenerateFeedback = async(messages: SavedMessage[]) => {
+    console.log('generate feedback');
+
+    //generate dynamic response
+    const { success, id } = {
+      success: true,
+      id: 'feedbackId',
+    }
+
+
+    if(success && id){
+      router.push(`/interview/${interviewId}/feedback`);
+    }
+    else{
+      console.log('error generating feedback');
+      router.push('/');
+    }
+
+
+  }
+
 
   useEffect(() => {
 
     if(callStatus === CallStatus.FINISHED){
-      router.push('/');
+      if(type === 'generate') router.push('/');
+      else handleGenerateFeedback(messages);
     }
 
   }, [messages,type,callStatus,userId]);
@@ -93,12 +116,27 @@ const Agent = ({userName, userId, type} : AgentProps) => {
 
     setCallStatus(CallStatus.CONNECTING);
 
-    await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
-      variableValues: {
-        username: userName,
-        userid: userId,
+    if(type === 'generate'){
+      await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
+        variableValues: {
+          username: userName,
+          userid: userId,
+        }
+      })
+    }
+    else{
+      let formattedQuestions = '';
+      if(questions){
+        formattedQuestions = questions.map((question) => `- ${question}`).join('\n');
       }
-    })
+
+      await vapi.start(interviewer,{
+        variableValues: {
+          questions: formattedQuestions,
+        }
+      })
+    }
+
 
   }
 

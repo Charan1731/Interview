@@ -4,7 +4,9 @@ import React from 'react'
 import Image from 'next/image'
 import { dummyInterviews } from '@/constants'
 import InterviewCard from '@/components/InterviewCard'
-import { getAllInterviews, getCurrentUser, getInterviewsByUserId } from '@/lib/actions/auth.action'
+import { getCurrentUser } from '@/lib/actions/auth.action'
+import { getInterviewsByUserId, getAllInterviews } from '@/lib/actions/general.action'
+
 
 const page = async() => {
 
@@ -15,9 +17,9 @@ const page = async() => {
     getAllInterviews({userId: user?.id!})
   ])
 
-  const hasPastInterviews = userInterviews?.length > 0;
+  const hasPastInterviews = userInterviews?.length ?? 0 > 0;
 
-  const hasAllInterviews = allInterviews?.length > 0;
+  const hasAllInterviews = allInterviews?.length ?? 0 > 0;
 
   return (
     <>
