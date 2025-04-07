@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
@@ -22,13 +22,36 @@ interface SavedMessage {
 
 const Agent = ({userName, userId, type, interviewId, questions} : AgentProps) => {
 
-  // console.log(userName, userId, type);
 
   const router = useRouter();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [isSpeaking, setIsSpeaking] = useState(false)
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [messages, setMessages] = useState<SavedMessage[]>([]);
+
+  useEffect(() => {
+    // Create audio element
+    audioRef.current = new Audio('/iphone.mp3');
+    audioRef.current.loop = true;
+    audioRef.current.volume = 0.5; // Set volume to 50%
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    // Handle ringing sound based on call status
+    if (callStatus === CallStatus.CONNECTING && audioRef.current) {
+      audioRef.current.play();
+    } else if (audioRef.current) {
+      audioRef.current.pause();
+    }
+  }, [callStatus]);
 
   useEffect(() => {
 
