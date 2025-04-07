@@ -108,7 +108,7 @@ const Feedback = async ({ params }: RouteParams) => {
             <Card className="p-8 border-amber-200/20 bg-gradient-to-br from-card to-amber-500/5">
               <div className="flex items-center gap-3 mb-6">
                 <Target className="w-6 h-6 text-amber-500" />
-                <h3 className="text-2xl font-semibold">Growth Areas</h3>
+                <h3 className="text-2xl font-semibold">Improvements</h3>
               </div>
               <ul className="space-y-3">
                 {feedback?.areasForImprovement?.map((area, index) => (
