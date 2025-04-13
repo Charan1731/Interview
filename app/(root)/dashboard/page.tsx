@@ -6,8 +6,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import DashboardMetrics from '@/components/DashboardMetrics';
-import InterviewTimeline from '@/components/InterviewTimeline';
-import SkillRadarChart from '@/components/SkillRadarChart';
+import EnhancedInterviewTimeline from '@/components/EnhancedInterviewTimeline';
+import EnhancedAnalyticsDashboard from '@/components/EnhancedAnalyticsDashboard';
 import dayjs from 'dayjs';
 
 const DashboardPage = async () => {
@@ -78,25 +78,15 @@ const DashboardPage = async () => {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Skill Radar Chart */}
-        <div className="lg:col-span-1 card-container p-6 rounded-xl bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50">
-          <h2 className="text-xl font-semibold mb-4">Skill Analysis</h2>
-          <div className="h-[300px] flex items-center justify-center">
-            {currentSkillData.length > 0 ? (
-              <SkillRadarChart 
-                skillData={currentSkillData} 
-                previousSkillData={previousSkillData.length > 0 ? previousSkillData : undefined} 
-              />
-            ) : (
-              <div className="text-center text-neutral-400">
-                <p>Complete interviews to see your skill analysis</p>
-              </div>
-            )}
-          </div>
-        </div>
+        {/* Enhanced Analytics Dashboard */}
+        <EnhancedAnalyticsDashboard 
+          currentSkillData={currentSkillData}
+          previousSkillData={previousSkillData}
+          feedbacks={userFeedbacks || []}
+        />
 
-        {/* Interview Timeline */}
-        <div className="lg:col-span-2 card-container p-6 rounded-xl bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50">
+        {/* Interview Timeline - Updated to use enhanced version */}
+        <div className="lg:col-span-1 card-container p-6 rounded-xl bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50">
           <h2 className="text-xl font-semibold mb-4">Interview History</h2>
           {showFirebaseIndexNote && (
             <div className="bg-amber-900/30 border border-amber-500/20 p-3 rounded-md mb-4">
@@ -108,9 +98,9 @@ const DashboardPage = async () => {
               </p>
             </div>
           )}
-          <div className="h-[400px] overflow-y-auto">
+          <div className="h-[550px] overflow-y-auto pr-2">
             {userInterviews && userInterviews.length > 0 ? (
-              <InterviewTimeline interviews={userInterviews} feedbacks={userFeedbacks || []} />
+              <EnhancedInterviewTimeline interviews={userInterviews} feedbacks={userFeedbacks || []} />
             ) : (
               <div className="flex flex-col items-center justify-center h-full text-center">
                 <Image src="/empty-state.svg" alt="No interviews" width={120} height={120} className="mb-4 opacity-50" />
@@ -124,62 +114,7 @@ const DashboardPage = async () => {
         </div>
       </div>
 
-      {/* Recent Interviews Section */}
-      {userInterviews && userInterviews.length > 0 && (
-        <section className="card-container p-6 rounded-xl bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Recent Interviews</h2>
-            {userInterviews.length > 5 && (
-              <Button variant="outline" asChild size="sm">
-                <Link href="#" className="text-sm">View All</Link>
-              </Button>
-            )}
-          </div>
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {userInterviews.slice(0, 6).map((interview) => {
-                const feedback = latestFeedbackMap.get(interview.id);
-                const hasFeedback = !!feedback;
-                
-                return (
-                  <div key={interview.id} className="bg-neutral-800/80 p-4 rounded-lg border border-neutral-700/50 hover:border-primary-500/30 transition-all hover:-translate-y-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <Image 
-                        src={interview.coverImage || '/default-interview.png'} 
-                        alt={interview.role} 
-                        width={40} 
-                        height={40} 
-                        className="rounded-full object-cover size-[40px]" 
-                      />
-                      <div>
-                        <h3 className="font-medium capitalize">{interview.role} Interview</h3>
-                        <p className="text-sm text-neutral-400">{dayjs(interview.createdAt).format('MMM D, YYYY')}</p>
-                      </div>
-                    </div>
-                    <div className="flex justify-between items-center mt-2">
-                      <div className="flex gap-2 items-center">
-                        <div className="text-sm bg-primary-500/10 text-primary-300 px-2 py-1 rounded capitalize">
-                          {interview.type}
-                        </div>
-                        {hasFeedback && (
-                          <div className="text-sm font-medium">
-                            Score: <span className="text-primary-300">{feedback.totalScore}</span>
-                          </div>
-                        )}
-                      </div>
-                      <Button asChild size="sm" variant="ghost">
-                        <Link href={`/interview/${interview.id}`}>
-                          Review
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-      )}
+      {/* Recent Interviews Section - Removing since we have better timeline now */}
     </div>
   );
 };
