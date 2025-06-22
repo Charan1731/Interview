@@ -22,8 +22,6 @@ const authFormSchema = (type:FormType) => {
   })
 }
 
-
-
 const AuthForm = ({type}:{type:FormType}) => {
 
   const router = useRouter();
@@ -93,49 +91,116 @@ const AuthForm = ({type}:{type:FormType}) => {
   const isSignIn = type === "sign-in"
 
   return (
-    <div className="card-border lg:min-w-[566px]">
-      <div className="flex flex-col gap-6 card py-14 px-10">
-        <div className="flex flex-row gap-2 justify-center">
-          <Image src="./logo.svg" alt="logo" width={32} height={32} className=""/>
-          <h2 className="text-primary-100">Mocksy</h2>
-        </div>
-        <h3>Practice Job Interviews with AI</h3>
+    <div className="relative">
+      {/* Background decoration */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-primary-200 via-primary-300 to-primary-200 rounded-3xl blur-sm opacity-20 animate-pulse"></div>
       
-      <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 mt-4 form">
-        {!isSignIn && 
-          <FormField
-            control={form.control}
-            name="name"
-            label="Name"
-            placeholder="Name"
-            type="text"
-          />
-        }
-        <FormField
-            control={form.control}
-            name="email"
-            label="Email"
-            placeholder="Your Email Address"
-            type="email"
-          />
-        <FormField
-            control={form.control}
-            name="password"
-            label="Password"
-            placeholder="Enter Your Password"
-            type="password"
-          />
-        <Button type="submit" className="btn">{isSignIn ? "Sign In" : "Create an Account"}</Button>
-      </form>
-    </Form>
-    <p className="text-center">
-      {isSignIn ? "Don't have an account?" : "Already have an account?"}
-      <Link href={isSignIn ? "/sign-up" : "/sign-in"} className="font-bold text-user-primary ml-1" >
-        {isSignIn ? "Sign Up" : "Sign In"}
-      </Link>
-    </p>
-    </div>
+      <div className="card-border lg:min-w-[600px] relative">
+        <div className="flex flex-col gap-8 card py-16 px-12 relative overflow-hidden">
+          
+          {/* Decorative elements */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary-200/10 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-primary-300/10 to-transparent rounded-full translate-y-12 -translate-x-12"></div>
+          
+          {/* Header Section */}
+          <div className="flex flex-col items-center gap-6 relative z-10">
+            <div className="flex flex-row items-center gap-3 group">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-200 to-primary-300 rounded-lg blur opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+                <div className="relative bg-gradient-to-r from-primary-200 to-primary-300 p-2 rounded-lg">
+                  <Image src="./logo.svg" alt="logo" width={28} height={28} className="brightness-0"/>
+                </div>
+              </div>
+              <h2 className="text-4xl font-bold bg-gradient-to-r from-primary-200 via-primary-300 to-primary-200 bg-clip-text text-transparent">
+                Mocksy
+              </h2>
+            </div>
+            
+            <div className="text-center space-y-2">
+              <h3 className="text-2xl font-semibold text-white">
+                {isSignIn ? "Welcome Back!" : "Join Mocksy Today"}
+              </h3>
+              <p className="text-light-100 text-lg font-medium">
+                {isSignIn 
+                  ? "Continue your journey to interview success" 
+                  : "Start practicing job interviews with AI"
+                }
+              </p>
+            </div>
+          </div>
+
+          {/* Form Section */}
+          <div className="relative z-10">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 form">
+                {!isSignIn && 
+                  <div className="space-y-2">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      label="Full Name"
+                      placeholder="Enter your full name"
+                      type="text"
+                    />
+                  </div>
+                }
+                
+                <div className="space-y-2">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    label="Email Address"
+                    placeholder="your.email@example.com"
+                    type="email"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    label="Password"
+                    placeholder="Enter a secure password"
+                    type="password"
+                  />
+                </div>
+                
+                <div className="pt-4">
+                  <Button 
+                    type="submit" 
+                    className="btn group relative overflow-hidden transition-all duration-300 hover:scale-105"
+                  >
+                    <span className="relative z-10 font-semibold text-lg">
+                      {isSignIn ? "Sign In to Account" : "Create Your Account"}
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary-300 to-primary-200 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          </div>
+
+          {/* Footer Section */}
+          <div className="text-center relative z-10">
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <div className="h-px bg-gradient-to-r from-transparent via-primary-200/30 to-transparent flex-1"></div>
+              <span className="text-light-100/60 text-sm">or</span>
+              <div className="h-px bg-gradient-to-r from-transparent via-primary-200/30 to-transparent flex-1"></div>
+            </div>
+            
+            <p className="text-light-100 text-lg">
+              {isSignIn ? "Don't have an account?" : "Already have an account?"}
+              <Link 
+                href={isSignIn ? "/sign-up" : "/sign-in"} 
+                className="font-bold text-primary-200 ml-2 hover:text-primary-300 transition-colors duration-200 relative group"
+              >
+                {isSignIn ? "Sign Up" : "Sign In"}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-200 to-primary-300 group-hover:w-full transition-all duration-300"></span>
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

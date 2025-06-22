@@ -334,6 +334,35 @@
   }
 }
 
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient-glow {
+  0%, 100% {
+    filter: brightness(1) saturate(1);
+    text-shadow: 0 0 20px rgba(202, 197, 254, 0.3);
+  }
+  50% {
+    filter: brightness(1.1) saturate(1.2);
+    text-shadow: 0 0 30px rgba(202, 197, 254, 0.5), 0 0 40px rgba(153, 148, 249, 0.3);
+  }
+}
+
+.animate-gradient-x {
+  background-size: 300% 300%;
+  animation: gradient-shift 4s ease-in-out infinite, gradient-glow 6s ease-in-out infinite;
+  position: relative;
+}
+
 .text-shadow-sm {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
 }
