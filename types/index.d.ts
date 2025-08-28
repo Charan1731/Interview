@@ -99,3 +99,103 @@ interface InterviewFormProps {
 interface TechIconProps {
   techStack: string[];
 }
+
+// Clinical Case Simulator Types
+interface ClinicalCase {
+  id: string;
+  title: string;
+  patientAge: number;
+  patientGender: 'male' | 'female' | 'other';
+  chiefComplaint: string;
+  symptoms: string[];
+  vitals: {
+    bloodPressure: string;
+    heartRate: number;
+    temperature: number;
+    respiratoryRate: number;
+    oxygenSaturation: number;
+  };
+  medicalHistory: string[];
+  physicalExam: string;
+  labResults?: Record<string, string>;
+  correctDiagnosis: string;
+  correctTreatment: string[];
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  specialty: string;
+  createdAt: string;
+  userId?: string;
+}
+
+interface CaseAttempt {
+  id: string;
+  caseId: string;
+  userId: string;
+  studentDiagnosis: string;
+  studentTreatment: string[];
+  reasoning: string;
+  score: number;
+  feedback: string;
+  timeSpent: number; // in seconds
+  completedAt: string;
+  transcript?: { role: string; content: string }[];
+}
+
+interface ClinicalCaseAgentProps {
+  userName: string;
+  userId: string;
+  caseId?: string;
+  type: "generate-case" | "solve-case";
+  currentCase?: ClinicalCase;
+}
+
+interface LeaderboardEntry {
+  userId: string;
+  userName: string;
+  totalScore: number;
+  casesCompleted: number;
+  averageScore: number;
+  rank: number;
+  specialty?: string;
+}
+
+interface MedicalReference {
+  title: string;
+  url: string;
+  source: 'pubmed' | 'medscape' | 'uptodate';
+  relevanceScore: number;
+}
+
+interface CreateCaseAttemptParams {
+  caseId: string;
+  userId: string;
+  diagnosis: string;
+  treatment: string[];
+  reasoning: string;
+  transcript?: { role: string; content: string }[];
+}
+
+interface ClinicalCaseFeedback {
+  id: string;
+  caseAttemptId: string;
+  caseId: string;
+  userId: string;
+  totalScore: number;
+  categoryScores: Array<{
+    name: string;
+    score: number;
+    comment: string;
+  }>;
+  diagnosticAccuracy: number;
+  treatmentAppropriate: number;
+  clinicalReasoning: number;
+  timeEfficiency: number;
+  correctDiagnosis: string;
+  studentDiagnosis: string;
+  correctTreatment: string[];
+  studentTreatment: string[];
+  strengths: string[];
+  areasForImprovement: string[];
+  detailedFeedback: string;
+  recommendedReading: MedicalReference[];
+  createdAt: string;
+}
