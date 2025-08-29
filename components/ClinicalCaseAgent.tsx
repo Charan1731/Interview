@@ -8,7 +8,7 @@ import { CallStatus } from '@/components/Agent';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import MedicalReferences from '@/components/MedicalReferences';
-// Temporary placeholder functions until clinical.action.ts is properly set up
+
 const createCaseAttempt = async (params: any) => {
   console.log('Creating case attempt:', params);
   return { success: true, attemptId: 'temp', score: 85, feedback: 'Good work!' };

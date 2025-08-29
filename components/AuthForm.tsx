@@ -1,6 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
@@ -13,6 +14,7 @@ import { useRouter } from "next/navigation"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "@/firebase/client"
 import { signIn, signUp } from "@/lib/actions/auth.action"
+import { Eye, EyeOff, Loader2 } from "lucide-react"
 
 const authFormSchema = (type:FormType) => {
   return z.object({
@@ -28,6 +30,9 @@ const AuthForm = ({type}:{type:FormType}) => {
 
   const formSchema = authFormSchema(type)
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,6 +43,7 @@ const AuthForm = ({type}:{type:FormType}) => {
   })
  
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
     try {
 
       if(type === "sign-up") {
@@ -85,6 +91,8 @@ const AuthForm = ({type}:{type:FormType}) => {
     } catch (error) {
       console.log(error)
       toast.error(`There is an error: ${error}`)
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -96,31 +104,31 @@ const AuthForm = ({type}:{type:FormType}) => {
       <div className="absolute -inset-1 bg-gradient-to-r from-primary-200 via-primary-300 to-primary-200 rounded-3xl blur-sm opacity-20 animate-pulse"></div>
       
       <div className="card-border lg:min-w-[600px] relative">
-        <div className="flex flex-col gap-8 card py-16 px-12 relative overflow-hidden">
+        <div className="flex flex-col gap-6 card py-12 px-8 lg:px-12 relative overflow-hidden">
           
           {/* Decorative elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary-200/10 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-primary-300/10 to-transparent rounded-full translate-y-12 -translate-x-12"></div>
           
           {/* Header Section */}
-          <div className="flex flex-col items-center gap-6 relative z-10">
+          <div className="flex flex-col items-center gap-4 relative z-10">
             <div className="flex flex-row items-center gap-3 group">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary-200 to-primary-300 rounded-lg blur opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
                 <div className="relative bg-gradient-to-r from-primary-200 to-primary-300 p-2 rounded-lg">
-                  <Image src="./logo.svg" alt="logo" width={28} height={28} className="brightness-0"/>
+                  <Image src="./logo.svg" alt="logo" width={24} height={24} className="brightness-0"/>
                 </div>
               </div>
-              <h2 className="text-4xl font-bold bg-gradient-to-r from-primary-200 via-primary-300 to-primary-200 bg-clip-text text-transparent">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-primary-200 via-primary-300 to-primary-200 bg-clip-text text-transparent">
                 Mocksy
               </h2>
             </div>
             
-            <div className="text-center space-y-2">
-              <h3 className="text-2xl font-semibold text-white">
+            <div className="text-center space-y-1">
+              <h3 className="text-xl font-semibold text-white">
                 {isSignIn ? "Welcome Back!" : "Join Mocksy Today"}
               </h3>
-              <p className="text-light-100 text-lg font-medium">
+              <p className="text-light-100 text-base">
                 {isSignIn 
                   ? "Continue your journey to interview success" 
                   : "Start practicing job interviews with AI"
@@ -132,47 +140,62 @@ const AuthForm = ({type}:{type:FormType}) => {
           {/* Form Section */}
           <div className="relative z-10">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 form">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-5 form">
                 {!isSignIn && 
-                  <div className="space-y-2">
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      label="Full Name"
-                      placeholder="Enter your full name"
-                      type="text"
-                    />
-                  </div>
-                }
-                
-                <div className="space-y-2">
                   <FormField
                     control={form.control}
-                    name="email"
-                    label="Email Address"
-                    placeholder="your.email@example.com"
-                    type="email"
+                    name="name"
+                    label="Full Name"
+                    placeholder="Enter your full name"
+                    type="text"
                   />
-                </div>
+                }
                 
-                <div className="space-y-2">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  label="Email Address"
+                  placeholder="your.email@example.com"
+                  type="email"
+                />
+                
+                <div className="relative">
                   <FormField
                     control={form.control}
                     name="password"
                     label="Password"
-                    placeholder="Enter a secure password"
-                    type="password"
+                    placeholder={isSignIn ? "Enter your password" : "Create a secure password (min 8 characters)"}
+                    type={showPassword ? "text" : "password"}
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-8 top-[42px] text-light-100 hover:text-white transition-colors duration-200 z-20"
+                    aria-label="Toggle password visibility"
+                    disabled={isLoading}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
                 
-                <div className="pt-4">
+                <div className="pt-2">
                   <Button 
                     type="submit" 
-                    className="btn group relative overflow-hidden transition-all duration-300 hover:scale-105"
+                    disabled={isLoading}
+                    className="btn group relative overflow-hidden transition-all duration-300 hover:scale-[1.02] disabled:hover:scale-100 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    <span className="relative z-10 font-semibold text-lg">
-                      {isSignIn ? "Sign In to Account" : "Create Your Account"}
-                    </span>
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        <span className="relative z-10 font-semibold">
+                          {isSignIn ? "Signing In..." : "Creating Account..."}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="relative z-10 font-semibold">
+                        {isSignIn ? "Sign In to Account" : "Create Your Account"}
+                      </span>
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-r from-primary-300 to-primary-200 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                   </Button>
                 </div>
@@ -182,17 +205,19 @@ const AuthForm = ({type}:{type:FormType}) => {
 
           {/* Footer Section */}
           <div className="text-center relative z-10">
-            <div className="flex items-center justify-center gap-4 mb-4">
+            <div className="flex items-center justify-center gap-4 mb-3">
               <div className="h-px bg-gradient-to-r from-transparent via-primary-200/30 to-transparent flex-1"></div>
               <span className="text-light-100/60 text-sm">or</span>
               <div className="h-px bg-gradient-to-r from-transparent via-primary-200/30 to-transparent flex-1"></div>
             </div>
             
-            <p className="text-light-100 text-lg">
+            <p className="text-light-100">
               {isSignIn ? "Don't have an account?" : "Already have an account?"}
               <Link 
                 href={isSignIn ? "/sign-up" : "/sign-in"} 
-                className="font-bold text-primary-200 ml-2 hover:text-primary-300 transition-colors duration-200 relative group"
+                className={`font-bold text-primary-200 ml-2 hover:text-primary-300 transition-colors duration-200 relative group ${
+                  isLoading ? 'pointer-events-none opacity-50' : ''
+                }`}
               >
                 {isSignIn ? "Sign Up" : "Sign In"}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-200 to-primary-300 group-hover:w-full transition-all duration-300"></span>

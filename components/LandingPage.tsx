@@ -57,7 +57,7 @@ const LandingPage = () => {
                     </Link>
                   </Button>
                   
-                  <Button asChild size="lg" variant="outline" className="group border-2 border-primary-200/30 hover:border-primary-200 bg-transparent text-primary-200 font-bold px-8 py-4 rounded-full transition-all duration-300 hover:bg-primary-200/10">
+                  <Button asChild size="lg" variant="outline" className="group border-2 border-primary-200/30 hover:border-primary-200 bg-transparent text-primary-200 font-bold px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 hover:bg-primary-200/10">
                     <Link href="/sign-in" className="flex items-center gap-2">
                       <span className="text-lg">Sign In</span>
                     </Link>
